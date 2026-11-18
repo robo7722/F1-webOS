@@ -8,26 +8,26 @@ Der [F1 Hub](https://github.com/robo7722/F1) als App für LG-Fernseher. Alle Ter
 
 ## Aufbau
 
+Die App folgt dem Muster bekannter TV-Apps: **Menü links, Inhalt als Kartenreihen rechts, Tastenhilfe unten.**
+
 | Bereich | Inhalt |
 |---|---|
-| Oben | Tabs (Termine, WM, Ergebnisse, News) und Uhr |
-| Links (immer sichtbar) | Nächster Termin mit Countdown, Wetter für Quali und Rennen, die vier folgenden Sessions sowie „Daten neu laden“ |
-| Rechts | Inhalt des gewählten Tabs als Raster |
-
-- **Termine:** Wochenenden als Karten, Filter für F1/F2 und ein Schalter für vergangene Termine. Darunter der Kalender 2027. Mit OK öffnet sich eine Karte mit allen Sessions.
-- **WM:** Fahrer- und Teamwertung von F1 und F2 in zwei Spalten.
-- **Ergebnisse:** eine Karte pro Rennen. Mit OK öffnen sich Rennen, Qualifikation, Sprint und Sprint-Quali.
-- **News:** Schlagzeilen als Karten. Mit OK öffnet sich der Artikel, auf Wunsch im Webbrowser des Fernsehers.
+| **Start** | Große Karte „Als Nächstes“ mit Countdown und Wetter, darunter Reihen mit den nächsten Sessions, den neuesten News und den letzten Ergebnissen |
+| **Termine** | Oben die Details des gewählten Wochenendes (alle Sessions, Wetter, Streckenkarte), darunter die Reihen Rennwochenenden, Anzeige-Filter und Saison 2027 |
+| **WM-Stand** | Vier Karten (F1/F2, Fahrer/Teams). Die Tabelle darunter wechselt, sobald eine Karte fokussiert ist. |
+| **Ergebnisse** | Oben das Podium des gewählten Rennens mit Pole und schnellster Runde. Mit OK öffnen sich alle Ergebnisse (Rennen, Qualifikation, Sprint, Sprint-Quali). |
+| **News** | Links die Schlagzeilen, rechts die gewählte Meldung mit **QR-Code zum Weiterlesen auf dem Handy**. Mit OK öffnet sich der Artikel im TV-Browser. |
 
 ## Bedienung
 
-| Taste | Funktion |
-|---|---|
-| ◀ ▲ ▶ ▼ | Fokus bewegen. In der Tab-Leiste wechselt der Tab sofort. |
-| OK | Auswählen bzw. Karte öffnen |
-| Zurück | 1. offene Karte schließen → 2. zur Tab-Leiste springen → 3. App beenden |
+| Taste | Im Menü | Im Inhalt |
+|---|---|---|
+| ▲ ▼ | Bereich wählen (wird sofort angezeigt) | Reihe wechseln |
+| ◀ ▶ | ▶ springt in den Inhalt | Innerhalb der Reihe bewegen. ◀ am Anfang springt zurück ins Menü. |
+| OK | Bereich öffnen | Aktion der Karte. Was OK gerade tut, steht unten in der Tastenhilfe. |
+| Zurück | Zur Startseite, auf der Startseite: App beenden | Zurück ins Menü (eine offene Ergebnis-Ansicht wird zuerst geschlossen) |
 
-Die Magic Remote funktioniert auch als Zeiger. Einen Bearbeiten-Modus gibt es auf dem TV nicht, weil keine Tastatur vorhanden ist.
+Beim Start liegt der Fokus direkt auf der Karte „Als Nächstes“. Die Magic Remote funktioniert auch als Zeiger. Einen Bearbeiten-Modus gibt es auf dem TV nicht, weil keine Tastatur vorhanden ist.
 
 ## Daten
 
@@ -36,6 +36,7 @@ Die Magic Remote funktioniert auch als Zeiger. Einen Bearbeiten-Modus gibt es au
 - **Wetter:** Open-Meteo
 - **Streckenkarten:** bacinger/f1-circuits
 - **Flaggen:** flagcdn.com
+- **QR-Codes:** [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) von Kazuhiko Arase (MIT), liegt unter `app/lib/`
 
 Alles wird lokal auf dem Fernseher zwischengespeichert, damit die App auch ohne Netz etwas anzeigt.
 
@@ -100,7 +101,7 @@ Oder auf dem TV selbst: App in der Startleiste lange drücken und auf **Entferne
 
 ## Entwickeln
 
-- Die App ist eine einzelne Datei: `app/index.html`, dazu `app/appinfo.json` und die Icons. Es gibt keinen Build-Schritt.
+- Die App besteht aus `app/index.html`, `app/appinfo.json`, den Icons und `app/lib/qrcode.js`. Es gibt keinen Build-Schritt.
 - Testen im Browser: `app/index.html` öffnen und das Fenster auf 1920×1080 stellen (kleinere Fenster werden skaliert). Pfeiltasten, Enter und Esc/Backspace entsprechen der Fernbedienung.
 - Bewusst ES5 und konservatives CSS: kein `grid`, kein `gap` bei Flexbox, kein `inset`, kein `Intl…formatToParts`. So läuft die App ab Chromium 53 (webOS 4).
 - Lokal packen:
