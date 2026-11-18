@@ -1,0 +1,48 @@
+name: IPK bauen
+
+on:
+  push:
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ipk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: webOS CLI installieren
+        run: npm install -g @webos-tools/cli
+
+      - name: Version aus dem Tag übernehmen
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          jq --arg v "$VERSION" '.version = $v' app/appinfo.json > appinfo.tmp && mv appinfo.tmp app/appinfo.json
+          echo "Version: $VERSION"
+
+      - name: IPK packen
+        run: |
+          mkdir -p dist
+          ares-package app -o dist
+          ls -l dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: f1hub-ipk
+          path: dist/*.ipk
+
+      - name: Release anlegen
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.ipk
+          generate_release_notes: true
